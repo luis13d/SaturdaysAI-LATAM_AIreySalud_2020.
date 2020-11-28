@@ -1,0 +1,113 @@
+<html>
+	<head>
+		<title>AIre</title>
+		<meta name="keywords" content="SaturdayAI"/>
+	</head>
+	<body style="background: #EAEAEC">
+	
+		
+
+  <div style="position: absolute; left: 50%;top:5px;">
+    <div style="position: relative; left: -50%;">
+		<img src="images/logo.jpg" height="150" width="250">
+    </div>
+  </div>		
+  <div style="position: absolute; left: 50%;top:175px;">
+    <div id='mapa_central' style="position: relative; left: -50%; border: 3px solid #73AD21;">
+		<img src="images/estaciones_transito.jpg" height="520" width="820"  usemap="#workmap">
+		<map name="workmap">
+		  <area id="a1" shape="circle" coords="172,25,30" alt="TLA" href="TLA.htm" onmouseover="//alert('hola')"/>
+		  <area id="a2" shape="circle" coords="330,50,30" alt="XAL" href="XAL.htm"/>
+		  <area id="a3" shape="circle" coords="350,110,30" alt="GAM" href="GAM.htm"/>
+		  <area id="a4" shape="circle" coords="80,340,30" alt="SFE" href="SFE.htm"/>
+		  <area id="a5" shape="circle" coords="120,390,30" alt="PED" href="PED.htm"/>
+		  <area id="a6" shape="circle" coords="160,500,30" alt="AJM" href="AJM.htm"/>
+		  <area id="a7" shape="circle" coords="210,390,30" alt="CCA" href="CCA.htm"/>
+		  <area id="a8" shape="circle" coords="260,250,30" alt="HGM" href="HGM.htm"/>
+		  <area id="a9" shape="circle" coords="310,250,30" alt="MER" href="MER.htm"/>
+		  <area id="a10" shape="circle" coords="460,285,30" alt="NEZ" href="NEZ.htm"/>
+		  <area id="a11" shape="circle" coords="680,150,30" alt="MON" href="MON.htm"/>
+		</map>
+    </div>
+  </div>		
+
+	<script >
+        function setIconStation(station_id) {
+            elemento = document.getElementById(station_id);
+            var iDiv = document.createElement('div');
+            var coordenas = elemento.coords.split(',');
+            iDiv.id = 'block'+station_id;
+            //iDiv.className = 'block';
+            var parentPositionLeft = parseInt(coordenas[0]);//elemento.getBoundingClientRect().top-20;
+            var parentPositionTop = parseInt(coordenas[1]);//elemento.getBoundingClientRect().left-40;
+            iDiv.style.position = 'absolute';
+            iDiv.style.left = parentPositionLeft+'px';
+            iDiv.style.top = parentPositionTop+'px';
+            console.log(iDiv.style.left);
+            var img = document.createElement('img'); 
+            img.src =  'images/5.jpg'; 
+            img.width =  32; 
+            img.height =  32; 
+            iDiv.appendChild(img); 
+            document.getElementById('mapa_central').appendChild(iDiv);
+		}
+        setIconStation('a1'); 
+        setIconStation('a2'); 
+        setIconStation('a3'); 
+        setIconStation('a4'); 
+        setIconStation('a5'); 
+        setIconStation('a6'); 
+        setIconStation('a7'); 
+        setIconStation('a8'); 
+        setIconStation('a9'); 
+        setIconStation('a10'); 
+        setIconStation('a11'); 
+    </script>
+
+		
+		<script src="http://paperjs.org/assets/js/jquery.js"></script>
+		<script src="http://paperjs.org/assets/js/paper.js"></script>
+		<script src="http://paperjs.org/assets/js/codemirror.js"></script>
+		<script src="http://paperjs.org/assets/js/scripts.js"></script>
+
+		<script type="text/paperscript" canvas="canvas-1">		
+			// The amount of points in the path:
+			var points = 25;
+
+			// The distance between the points:
+			var length = 35;
+
+			var path = new Path({
+				strokeColor: '#E4141B',
+				strokeWidth: 20,
+				strokeCap: 'round'
+			});
+
+			var start = view.center / [10, 1];
+			for (var i = 0; i < points; i++)
+				path.add(start + new Point(i * length, 0));
+
+			function onMouseMove(event) {
+				path.firstSegment.point = event.point;
+				for (var i = 0; i < points - 1; i++) {
+					var segment = path.segments[i];
+					var nextSegment = segment.next;
+					var vector = segment.point - nextSegment.point;
+					vector.length = length;
+					nextSegment.point = segment.point - vector;
+				}
+				path.smooth({ type: 'continuous' });
+			}
+
+			function onMouseDown(event) {
+				path.fullySelected = true;
+				path.strokeColor = '#e08285';
+			}
+
+			function onMouseUp(event) {
+				path.fullySelected = false;
+				path.strokeColor = '#e4141b';
+			}
+		<script> 		
+		</body>
+</html>
