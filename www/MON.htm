@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<title>AIre</title>
+		<meta name="keywords" content="SaturdayAI"/>
+	</head>
+	<body style="background: #EAEAEC ">
+		<div style="position: absolute; left: 50%;top:5px;">
+			<div style="position: relative; left: -50%;">
+				<img src="images/logo.jpg" height="150" width="250">
+			</div>
+		</div>		
+		<div style="position: absolute; left: 50%;top:175px;">
+			<div id='mapa_central' style="position: relative; left: -50%; border: 3px solid #017F38;">
+				<p  style="color:#017F38;font-size:24px;text-align:center">Estaci&oacute;n Montecillo</p>
+				<table style="width:100%">
+					<tr>
+					<th><img src="images/NOP.jpg" height="520" width="820" usemap="#workmap"></th>
+					<th><img src="images/escala.jpg" height="284" width="180" ></th>
+					</tr>
+				</table>
+			</div>
+		</div>		
+
+		<script >
+			function setIconStation(station_id) {
+				elemento = document.getElementById(station_id);
+				var iDiv = document.createElement('div');
+				var coordenas = elemento.coords.split(',');
+				iDiv.id = 'block'+station_id;
+				//iDiv.className = 'block';
+				var parentPositionLeft = parseInt(coordenas[0]);//elemento.getBoundingClientRect().top-20;
+				var parentPositionTop = parseInt(coordenas[1]);//elemento.getBoundingClientRect().left-40;
+				iDiv.style.position = 'absolute';
+				iDiv.style.left = parentPositionLeft+'px';
+				iDiv.style.top = parentPositionTop+'px';
+				console.log(iDiv.style.left);
+				var img = document.createElement('img'); 
+				img.src =  'images/5.jpg'; 
+				img.width =  32; 
+				img.height =  32; 
+				iDiv.appendChild(img); 
+				document.getElementById('mapa_central').appendChild(iDiv);
+			}
+		</script>
+	</body>
+</html>
